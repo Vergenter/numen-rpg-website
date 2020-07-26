@@ -1,0 +1,8 @@
+.card-clickable{
+    color: black;
+}
+.card-clickable:hover {
+    background-color: #ddd;
+    text-decoration: none;
+    color: rgb(250, 250, 255);
+}
