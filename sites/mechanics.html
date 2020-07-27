@@ -21,10 +21,14 @@
       <div class="row flex-xl-nowrap">
         <div class="col-12 col-md-3 col-xl-2 ">
           <div class="sidebar">
+            <div class="form-group">
+              <label for="filterTopics">Filtruj</label>
+              <input type="search" class="form-control" id="filterTopics" placeholder="Wpisz temat">
+            </div>
             <nav class="navprops">
-              <a href="#introduction">Wstęp</a>
-              <a href="#creating-character-worksheet">Tworzenie karty postaci</a>
-              <a href="#buying-items"> Kupowanie przedmiotów</a>
+              <a class="filterable show" href="#introduction">Wstęp</a>
+              <a class="filterable show" href="#creating-character-worksheet">Tworzenie karty postaci</a>
+              <a class="filterable show" href="#buying-items"> Kupowanie przedmiotów</a>
             </nav>
           </div>
         </div>
@@ -41,3 +45,36 @@
     </div>
   </body>
 </html>
+<script>
+    //setup before functions
+  let typingTimer;                //timer identifier
+  const doneTypingInterval = 200;  //time in ms (5 seconds)
+  const filterInputName = "filterTopics";
+  let filterInput = document.getElementById(filterInputName);
+
+  //on keyup or search, start the countdown
+  filterInput.addEventListener('search', searchAction);
+  filterInput.addEventListener('keyup', searchAction);
+  function searchAction() {
+    clearTimeout(typingTimer);
+      console.log("there is some action");
+      typingTimer = setTimeout(()=>filterSelection(filterInput.value), doneTypingInterval);
+  }
+  //user is "finished typing," do something
+  function filterSelection (filterValue) {
+      Array.from(document.getElementsByClassName("filterable")).forEach(
+        (filterable) => filterable.textContent.toLowerCase().includes(filterValue.toLowerCase())?
+        showElement(filterable) : hideElement(filterable)
+      );
+  }
+  function showElement(element) {
+    if(!element.className.includes("show")){
+      element.className += " show";
+    }
+  }
+  function hideElement(element){
+    if(element.className.includes("show")){
+      element.className = element.className.replace(" show","");
+    }
+  }
+</script>
